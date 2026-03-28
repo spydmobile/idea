@@ -13,17 +13,18 @@ export default function TagFilter({ activeTags, onToggleTag }) {
   if (labels.length === 0) return null;
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2 items-center">
+      <span className="text-xs text-ink-muted italic mr-1 font-body">Filter:</span>
       {labels.map(label => {
         const active = activeTags.includes(label.name);
         return (
           <button
             key={label.id}
             onClick={() => onToggleTag(label.name)}
-            className={`text-xs px-3 py-1 rounded-full border transition ${
+            className={`text-xs font-body px-3 py-1 border transition-all duration-200 ${
               active
-                ? 'bg-amber-100 border-amber-400 text-amber-800'
-                : 'bg-white border-stone-200 text-stone-600 hover:border-stone-300'
+                ? 'bg-sienna text-white border-sienna'
+                : 'bg-transparent border-rule text-ink-muted hover:border-ink-muted/50 hover:text-ink-light'
             }`}
           >
             {label.name}

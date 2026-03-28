@@ -35,45 +35,55 @@ export default function CommentThread({ comments, issueNumber, token, onNewComme
   };
 
   return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-stone-800">
-        Comments ({comments.length})
+    <div className="space-y-6">
+      <h3 className="font-display text-xl font-semibold text-ink">
+        Conversation
+        {comments.length > 0 && (
+          <span className="text-ink-muted font-body text-sm font-normal italic ml-2">
+            ({comments.length})
+          </span>
+        )}
       </h3>
 
       {comments.length === 0 && (
-        <p className="text-stone-400 text-sm">No comments yet. Start the conversation.</p>
+        <p className="text-ink-muted text-sm italic font-body">No comments yet. Start the conversation.</p>
       )}
 
-      <div className="space-y-3">
-        {comments.map(c => (
-          <div key={c.id} className="border border-stone-200 rounded-lg p-4 bg-white">
-            <div className="flex items-center gap-2 text-sm text-stone-500 mb-2">
-              <img src={c.user.avatar_url} alt={c.user.login} className="w-5 h-5 rounded-full" />
-              <span className="font-medium text-stone-700">{c.user.login}</span>
-              <span className="text-stone-300">·</span>
-              <span>{timeAgo(c.created_at)}</span>
+      <div className="space-y-1">
+        {comments.map((c, i) => (
+          <div
+            key={c.id}
+            className="py-5 animate-fade-up"
+            style={{ animationDelay: `${i * 60}ms` }}
+          >
+            <div className="flex items-center gap-2.5 text-sm font-body text-ink-muted mb-3">
+              <img src={c.user.avatar_url} alt={c.user.login} className="w-6 h-6 rounded-full ring-1 ring-rule" />
+              <span className="font-medium text-ink-light">{c.user.login}</span>
+              <span className="text-rule">|</span>
+              <span className="italic">{timeAgo(c.created_at)}</span>
             </div>
             <div
-              className="prose prose-sm prose-stone max-w-none"
+              className="prose-editorial font-body text-sm pl-8"
               dangerouslySetInnerHTML={{ __html: marked.parse(c.body) }}
             />
+            {i < comments.length - 1 && <div className="editorial-rule mt-5" />}
           </div>
         ))}
       </div>
 
       {token && (
-        <form onSubmit={handleSubmit} className="space-y-3 pt-2">
+        <form onSubmit={handleSubmit} className="space-y-4 pt-2">
           <textarea
             value={body}
             onChange={e => setBody(e.target.value)}
-            placeholder="Add a comment..."
+            placeholder="Add to the conversation..."
             rows={3}
-            className="w-full px-4 py-3 border border-stone-200 rounded-lg bg-white text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 resize-y transition"
+            className="w-full px-4 py-3 bg-parchment/40 border border-rule text-ink font-body text-sm placeholder-ink-muted/40 rounded-none focus:outline-none focus:border-sienna/50 focus:bg-white resize-y transition-all"
           />
           <button
             type="submit"
             disabled={submitting || !body.trim()}
-            className="px-5 py-2 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 disabled:opacity-50 transition"
+            className="px-5 py-2 bg-sienna text-white font-body text-sm font-medium hover:bg-sienna-dark disabled:opacity-40 transition-colors"
           >
             {submitting ? 'Posting...' : 'Post comment'}
           </button>

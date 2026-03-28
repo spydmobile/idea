@@ -11,33 +11,41 @@ export default function App() {
 
   return (
     <BrowserRouter basename="/idea">
-      <div className="min-h-screen bg-stone-50 text-stone-900">
-        <header className="border-b border-stone-200 bg-white">
-          <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
-            <div>
-              <a href="/idea/" className="text-lg font-bold text-stone-900 hover:text-amber-700 transition">
-                Ideas for the World
-              </a>
-              <p className="text-xs text-stone-400 mt-0.5">Open source ideas, free to build on</p>
-            </div>
-            <div>
-              {auth.loading && <span className="text-sm text-stone-400">Signing in...</span>}
-              {auth.error && <span className="text-sm text-red-500">{auth.error}</span>}
-              {auth.user ? (
-                <UserBadge user={auth.user} onLogout={auth.logout} />
-              ) : !auth.loading && (
-                <button
-                  onClick={auth.login}
-                  className="text-sm px-4 py-2 border border-stone-200 rounded-lg hover:bg-stone-50 transition"
-                >
-                  Sign in
-                </button>
-              )}
+      <div className="min-h-screen bg-cream text-ink">
+        <header className="relative">
+          <div className="max-w-2xl mx-auto px-6 pt-8 pb-6">
+            <div className="flex items-end justify-between">
+              <div>
+                <a href="/idea/" className="group">
+                  <h1 className="font-display text-3xl sm:text-4xl font-bold text-ink tracking-tight leading-none">
+                    Ideas
+                    <span className="text-sienna ml-1 italic font-semibold">for the World</span>
+                  </h1>
+                </a>
+                <p className="font-body text-sm text-ink-muted mt-2 tracking-wide">
+                  Open source ideas, free to build on
+                </p>
+              </div>
+              <div className="pb-1">
+                {auth.loading && <span className="text-sm text-ink-muted italic">Signing in...</span>}
+                {auth.error && <span className="text-sm text-sienna">{auth.error}</span>}
+                {auth.user ? (
+                  <UserBadge user={auth.user} onLogout={auth.logout} />
+                ) : !auth.loading && (
+                  <button
+                    onClick={auth.login}
+                    className="text-sm font-body text-ink-muted border-b border-ink-muted/30 hover:text-sienna hover:border-sienna/50 transition-colors pb-0.5"
+                  >
+                    Sign in with GitHub
+                  </button>
+                )}
+              </div>
             </div>
           </div>
+          <div className="editorial-rule mx-6" />
         </header>
 
-        <main className="max-w-3xl mx-auto px-4 py-8">
+        <main className="max-w-2xl mx-auto px-6 py-10">
           <Routes>
             <Route path="/" element={<IdeaFeed auth={auth} />} />
             <Route path="/ideas/:number" element={<IdeaDetail auth={auth} />} />

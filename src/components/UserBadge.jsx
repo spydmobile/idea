@@ -1,13 +1,13 @@
 export default function UserBadge({ user, onLogout }) {
   return (
-    <div className="flex items-center gap-2">
-      <img src={user.avatar_url} alt={user.login} className="w-7 h-7 rounded-full" />
-      <span className="text-sm font-medium text-stone-700 hidden sm:inline">{user.login}</span>
+    <div className="flex items-center gap-2.5">
+      <img src={user.avatar_url} alt={user.login} className="w-7 h-7 rounded-full ring-2 ring-parchment" />
+      <span className="text-sm font-body font-medium text-ink-light hidden sm:inline">{user.login}</span>
       <button
         onClick={onLogout}
-        className="text-xs text-stone-400 hover:text-stone-600 transition ml-1"
+        className="text-xs font-body text-ink-muted/50 border-b border-transparent hover:border-ink-muted/30 hover:text-ink-muted transition-colors ml-0.5"
       >
-        Sign out
+        sign out
       </button>
     </div>
   );

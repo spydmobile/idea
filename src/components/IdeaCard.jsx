@@ -13,58 +13,71 @@ function timeAgo(date) {
   return 'just now';
 }
 
-export default function IdeaCard({ idea }) {
+export default function IdeaCard({ idea, index = 0 }) {
   const title = idea.title.replace(/^\[IDEA\]\s*/i, '');
   const reactions = idea.reactions || {};
   const tags = (idea.labels || [])
     .filter(l => l.name !== 'idea')
     .slice(0, 3);
+  const totalReactions = (reactions['+1'] || 0) + (reactions.heart || 0) + (reactions.rocket || 0);
 
   return (
     <Link
       to={`/ideas/${idea.number}`}
-      className="block bg-white border border-stone-200 rounded-xl p-6 hover:shadow-md hover:border-stone-300 transition-all duration-200"
+      className="group block animate-fade-up"
+      style={{ animationDelay: `${index * 80}ms` }}
     >
-      <h3 className="text-lg font-semibold text-stone-900 leading-snug mb-2">
-        {title}
-      </h3>
+      <article className="py-6 border-b border-rule-light">
+        <div className="flex gap-5">
+          <div className="flex-1 min-w-0">
+            <h3 className="font-display text-xl font-semibold text-ink leading-snug group-hover:text-sienna transition-colors duration-200">
+              {title}
+            </h3>
 
-      <div className="flex items-center gap-2 text-sm text-stone-500 mb-3">
-        {idea.user && (
-          <>
-            <img
-              src={idea.user.avatar_url}
-              alt={idea.user.login}
-              className="w-5 h-5 rounded-full"
-            />
-            <span>{idea.user.login}</span>
-            <span className="text-stone-300">·</span>
-          </>
-        )}
-        <span>{timeAgo(idea.created_at)}</span>
-      </div>
+            <div className="flex items-center gap-2 mt-2.5 text-sm text-ink-muted font-body">
+              {idea.user && (
+                <>
+                  <img
+                    src={idea.user.avatar_url}
+                    alt={idea.user.login}
+                    className="w-5 h-5 rounded-full ring-1 ring-rule"
+                  />
+                  <span className="font-medium text-ink-light">{idea.user.login}</span>
+                  <span className="text-rule">|</span>
+                </>
+              )}
+              <span className="italic">{timeAgo(idea.created_at)}</span>
+            </div>
 
-      {tags.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mb-3">
-          {tags.map(tag => (
-            <span
-              key={tag.id}
-              className="text-xs px-2 py-0.5 rounded-full bg-stone-100 text-stone-600"
-            >
-              {tag.name}
-            </span>
-          ))}
+            {tags.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 mt-3">
+                {tags.map(tag => (
+                  <span
+                    key={tag.id}
+                    className="text-xs font-body px-2.5 py-0.5 bg-parchment text-ink-muted rounded"
+                  >
+                    {tag.name}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="flex flex-col items-end justify-between shrink-0 pt-1">
+            {totalReactions > 0 && (
+              <div className="flex items-center gap-1 text-sm text-ink-muted">
+                <span className="text-sienna-light">{reactions['+1'] > 0 && reactions['+1']}</span>
+                {reactions.heart > 0 && <span className="text-terracotta ml-1">{reactions.heart}</span>}
+              </div>
+            )}
+            {idea.comments > 0 && (
+              <span className="text-xs text-ink-muted italic mt-auto">
+                {idea.comments} {idea.comments === 1 ? 'reply' : 'replies'}
+              </span>
+            )}
+          </div>
         </div>
-      )}
-
-      <div className="flex items-center gap-3 text-sm text-stone-400">
-        {reactions['+1'] > 0 && <span>👍 {reactions['+1']}</span>}
-        {reactions.heart > 0 && <span>❤️ {reactions.heart}</span>}
-        {reactions.rocket > 0 && <span>🚀 {reactions.rocket}</span>}
-        {idea.comments > 0 && (
-          <span className="ml-auto">💬 {idea.comments}</span>
-        )}
-      </div>
+      </article>
     </Link>
   );
 }

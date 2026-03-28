@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { addReaction } from '../api/github';
 
 const REACTIONS = [
-  { content: '+1', emoji: '👍' },
-  { content: 'heart', emoji: '❤️' },
-  { content: 'rocket', emoji: '🚀' },
-  { content: 'eyes', emoji: '👀' },
+  { content: '+1', emoji: '👍', label: 'Support' },
+  { content: 'heart', emoji: '❤️', label: 'Love' },
+  { content: 'rocket', emoji: '🚀', label: 'Launch it' },
+  { content: 'eyes', emoji: '👀', label: 'Watching' },
 ];
 
 export default function VoteButton({ issueNumber, reactions = {}, token }) {
@@ -29,20 +29,21 @@ export default function VoteButton({ issueNumber, reactions = {}, token }) {
   };
 
   return (
-    <div className="flex gap-2">
-      {REACTIONS.map(({ content, emoji }) => (
+    <div className="flex flex-wrap gap-3">
+      {REACTIONS.map(({ content, emoji, label }) => (
         <button
           key={content}
           onClick={() => handleVote(content)}
           disabled={!token || voted[content]}
-          className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-sm border rounded-lg transition ${
+          title={label}
+          className={`group inline-flex items-center gap-2 px-4 py-2 text-sm font-body border transition-all duration-200 ${
             voted[content]
-              ? 'bg-amber-50 border-amber-300 text-amber-700'
-              : 'bg-white border-stone-200 text-stone-600 hover:border-stone-300'
-          } disabled:opacity-50`}
+              ? 'bg-sienna-wash border-sienna-light text-sienna'
+              : 'bg-cream border-rule text-ink-muted hover:border-sienna-light hover:text-sienna'
+          } disabled:cursor-default`}
         >
-          <span>{emoji}</span>
-          <span>{counts[content]}</span>
+          <span className="text-base">{emoji}</span>
+          <span className="font-medium tabular-nums">{counts[content]}</span>
         </button>
       ))}
     </div>
