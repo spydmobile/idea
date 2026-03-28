@@ -3,7 +3,7 @@ main = "index.js"
 compatibility_date = "2024-01-01"
 
 [vars]
-ALLOWED_ORIGIN = "https://spydmobile.github.io"
+ALLOWED_ORIGIN = "https://web.spyd.com"
 
 # Set these as secrets via: wrangler secret put GITHUB_CLIENT_SECRET
 # GITHUB_CLIENT_ID = set as secret
