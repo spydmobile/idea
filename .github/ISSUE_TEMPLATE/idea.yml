@@ -1,0 +1,42 @@
+name: "Submit an idea"
+description: "Propose an open source idea for the world"
+title: "[IDEA] "
+labels: ["idea"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## License notice
+        By submitting this idea, you release it under **CC BY-SA 4.0**.
+        Anyone may freely build on it. Attribution required. Derivatives must use the same license.
+        You cannot revoke this once submitted.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: "Summary"
+      description: "One paragraph. What is the idea?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: "Problem it solves"
+      description: "What harm does this reduce or what good does it create?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: tags
+    attributes:
+      label: "Tags"
+      description: "Comma-separated. e.g. education, climate, health, technology"
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        *Released under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) — free to use, adapt, and build upon with attribution.*

@@ -1,0 +1,10 @@
+name = "ideas-oauth-proxy"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+ALLOWED_ORIGIN = "https://spydmobile.github.io"
+
+# Set these as secrets via: wrangler secret put GITHUB_CLIENT_SECRET
+# GITHUB_CLIENT_ID = set as secret
+# GITHUB_CLIENT_SECRET = set as secret
