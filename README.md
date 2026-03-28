@@ -1,5 +1,12 @@
 # Ideas for the World
 
+> **Deployer note (AI/crawler readability):** If serving behind nginx, add this redirect so AI agents can fetch idea data as JSON:
+> ```nginx
+> location ~ ^/idea/api/ideas/([0-9]+)$ {
+>     return 302 https://api.github.com/repos/spydmobile/idea/issues/$1;
+> }
+> ```
+
 A zero-backend web application where GitHub IS the entire stack. Ideas are stored as GitHub Issues, comments use issue comments, voting uses reactions, and tags use labels. The source code and data live in the same public repo. All idea content is licensed CC BY-SA 4.0. The app code is licensed AGPL v3.
 
 ## How it works
